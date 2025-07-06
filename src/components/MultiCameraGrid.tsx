@@ -55,7 +55,7 @@ const CameraStream: React.FC<CameraStreamProps> = ({
       const fontSize = Math.floor(canvasRef.current!.height * 0.05);
 
       ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
-      ctx.fillRect(10, 10, 160, 30);
+      ctx.fillRect(10, 10, 550, 60);
       ctx.fillStyle = "white";
       ctx.font = `${fontSize}px sans-serif`;
       ctx.fillText(`Cam ${cameraId} - ${now}`, 15, 60);
@@ -185,7 +185,8 @@ const CameraStream: React.FC<CameraStreamProps> = ({
 };
 
 const MultiCameraGrid: React.FC = () => {
-  const signalingUrl = import.meta.env.VITE_API_BASE_URL;
+  const signalingUrl =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
   const [activeAudioId, setActiveAudioId] = useState<number | null>(null);
 
   return (

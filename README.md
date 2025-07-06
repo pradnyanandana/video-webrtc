@@ -1,69 +1,67 @@
-# React + TypeScript + Vite
+# React WebRTC CCTV Player
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project displays a 2x2 CCTV-like video grid in React using WebRTC and streams from a backend server.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎥 **Stream 4 videos** using WebRTC (simulated cameras).
+- 🔊 **Audio Control**:
+  - Only **one stream** can play audio at a time.
+  - Clicking the speaker icon mutes others.
+- 🔁 **Start/Stop streaming** per camera.
+- 🔎 **Fullscreen per camera**.
+- ⏺️ **Overlay info**: camera ID and live timestamp.
+- 📐 **Rendered on Canvas** to allow overlays and customization.
 
-## Expanding the ESLint configuration
+## Folder Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+/src
+  └── MultiCameraGrid.tsx   // Main component with 2x2 video grid
+  └── App.tsx               // Entry point (imports and renders grid)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_API_BASE_URL=http://localhost:8080
 ```
+
+## How to Use
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start the React app:
+
+```bash
+npm run dev
+```
+
+3. Ensure your backend server is running at `http://localhost:8080`.
+
+## Backend Requirements
+
+- The backend must expose `/offer/:cameraId` route for WebRTC signaling.
+- Each `cameraId` should correspond to a local video file.
+
+## Tech Stack
+
+- React + TypeScript
+- WebRTC (via browser)
+- React Icons (`react-icons/fa`)
+- Canvas API for rendering + overlay
+
+## Notes
+
+- Make sure video files exist on the backend path as per `cameraId`.
+- Only one camera's audio is active at a time.
+
+## License
+
+MIT
